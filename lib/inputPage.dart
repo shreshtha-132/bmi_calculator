@@ -27,6 +27,8 @@ class _InputPageState extends State<InputPage> {
   Color femaleCardColor = inactiveCardColor;
 
   int height = 180;
+  int weight = 30;
+  int age = 10;
 
   void updateCardColor(Gender gender) {
     // gender = 1 for male , 2 for female
@@ -123,6 +125,7 @@ class _InputPageState extends State<InputPage> {
                 SliderTheme(
                   data: SliderTheme.of(context).copyWith(
                     thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
+                    overlayShape: RoundSliderOverlayShape(overlayRadius: 30),
                   ),
                   child: Slider(
                     value: height.toDouble(),
@@ -162,6 +165,11 @@ class _InputPageState extends State<InputPage> {
                             color: Color(0xFF8D8E98),
                           ),
                         ),
+                        Text(
+                          weight.toString(),
+                          style: TextStyle(
+                              fontSize: 50, fontWeight: FontWeight.w900),
+                        ),
                       ],
                     ),
                   ),
@@ -178,6 +186,11 @@ class _InputPageState extends State<InputPage> {
                             fontSize: 18,
                             color: Color(0xFF8D8E98),
                           ),
+                        ),
+                        Text(
+                          age.toString(),
+                          style: TextStyle(
+                              fontSize: 50, fontWeight: FontWeight.w900),
                         ),
                       ],
                     ),
