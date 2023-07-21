@@ -1,4 +1,5 @@
 // TODO Implement this library.
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
@@ -24,6 +25,8 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage> {
   Color maleCardColor = inactiveCardColor;
   Color femaleCardColor = inactiveCardColor;
+
+  int height = 180;
 
   void updateCardColor(Gender gender) {
     // gender = 1 for male , 2 for female
@@ -51,6 +54,7 @@ class _InputPageState extends State<InputPage> {
         title: Center(child: Text('BMI CALCULATOR')),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Row(
@@ -86,17 +90,54 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
               child: Container(
-            width: double.infinity,
+            // width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'WEIGHT',
+                  'HEIGHT',
                   style: TextStyle(
                     fontSize: 18,
                     color: Color(0xFF8D8E98),
                   ),
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text(
+                      height.toString(),
+                      style:
+                          TextStyle(fontSize: 50, fontWeight: FontWeight.w900),
+                    ),
+                    Text(
+                      ' cm',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: Color(0xFF8D8E98),
+                      ),
+                    ),
+                  ],
+                ),
+                SliderTheme(
+                  data: SliderTheme.of(context).copyWith(
+                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
+                  ),
+                  child: Slider(
+                    value: height.toDouble(),
+                    min: 120.0,
+                    max: 220.0,
+                    activeColor: Color(0xFFEB1555),
+                    inactiveColor: Color(0xFF8D8E98),
+                    onChanged: (double newVal) {
+                      setState(() {
+                        height = newVal.round();
+                        // print(newVal);
+                      });
+                    },
+                  ),
+                )
               ],
             ),
             margin: EdgeInsets.all(15),
