@@ -1,9 +1,11 @@
 // TODO Implement this library.
+import 'package:bmi_calculator/results_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'icon_content.dart';
 import 'reusable_card.dart';
+import 'results_page.dart';
 
 const bottomContainerHeight = 80.0;
 const reusableCardColor = Color(0xFF1D1E33);
@@ -251,12 +253,24 @@ class _InputPageState extends State<InputPage> {
               ],
             ),
           ),
-          Container(
-            height: bottomContainerHeight,
-            width: double.infinity,
-            color: bottomContainerColor,
-            margin: EdgeInsets.only(top: 10),
-            // child: Text('Last Container'),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ResultsPage()));
+            },
+            child: Container(
+              child: Center(
+                child: Text(
+                  "CALCULATE",
+                  style: TextStyle(fontSize: 40),
+                ),
+              ),
+              height: bottomContainerHeight,
+              width: double.infinity,
+              color: bottomContainerColor,
+              margin: EdgeInsets.only(top: 10),
+              // child: Text('Last Container'),
+            ),
           )
         ],
       ),
