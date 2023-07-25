@@ -1,4 +1,5 @@
 // TODO Implement this library.
+import 'package:bmi_calculator/calculator_brain.dart';
 import 'package:bmi_calculator/results_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,14 @@ class _InputPageState extends State<InputPage> {
   int height = 180;
   int weight = 30;
   int age = 10;
+
+  int retHeight() {
+    return height;
+  }
+
+  int retWeight() {
+    return weight;
+  }
 
   void updateCardColor(Gender gender) {
     // gender = 1 for male , 2 for female
@@ -93,64 +102,65 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           Expanded(
-              child: Container(
-            // width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'HEIGHT',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Color(0xFF8D8E98),
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.baseline,
-                  textBaseline: TextBaseline.alphabetic,
-                  children: [
-                    Text(
-                      height.toString(),
-                      style:
-                          TextStyle(fontSize: 50, fontWeight: FontWeight.w900),
+            child: Container(
+              // width: double.infinity,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'HEIGHT',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Color(0xFF8D8E98),
                     ),
-                    Text(
-                      ' cm',
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xFF8D8E98),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        height.toString(),
+                        style: TextStyle(
+                            fontSize: 50, fontWeight: FontWeight.w900),
                       ),
+                      Text(
+                        ' cm',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color(0xFF8D8E98),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                      thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
+                      overlayShape: RoundSliderOverlayShape(overlayRadius: 30),
                     ),
-                  ],
-                ),
-                SliderTheme(
-                  data: SliderTheme.of(context).copyWith(
-                    thumbShape: RoundSliderThumbShape(enabledThumbRadius: 15),
-                    overlayShape: RoundSliderOverlayShape(overlayRadius: 30),
-                  ),
-                  child: Slider(
-                    value: height.toDouble(),
-                    min: 120.0,
-                    max: 220.0,
-                    activeColor: Color(0xFFEB1555),
-                    inactiveColor: Color(0xFF8D8E98),
-                    onChanged: (double newVal) {
-                      setState(() {
-                        height = newVal.round();
-                        // print(newVal);
-                      });
-                    },
-                  ),
-                )
-              ],
+                    child: Slider(
+                      value: height.toDouble(),
+                      min: 120.0,
+                      max: 220.0,
+                      activeColor: Color(0xFFEB1555),
+                      inactiveColor: Color(0xFF8D8E98),
+                      onChanged: (double newVal) {
+                        setState(() {
+                          height = newVal.round();
+                          // print(newVal);
+                        });
+                      },
+                    ),
+                  )
+                ],
+              ),
+              margin: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                color: reusableCardColor,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
-            margin: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              color: reusableCardColor,
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          )),
+          ),
           Expanded(
             child: Row(
               children: [
@@ -255,10 +265,19 @@ class _InputPageState extends State<InputPage> {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => ResultsPage()));
+              CalculatorBrain calc =
+                  CalculatorBrain(height: height, weight: weight);
+
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => ResultsPage(
+                          bmi: calc.calculateBMI(),
+                          interpretation: calc.getInterpretation(),
+                          result: calc.getResult())));
             },
             child: Container(
+              padding: EdgeInsets.only(bottom: 20),
               child: Center(
                 child: Text(
                   "CALCULATE",
@@ -271,7 +290,7 @@ class _InputPageState extends State<InputPage> {
               margin: EdgeInsets.only(top: 10),
               // child: Text('Last Container'),
             ),
-          )
+          ),
         ],
       ),
     );
